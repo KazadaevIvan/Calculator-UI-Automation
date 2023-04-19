@@ -1,12 +1,10 @@
 package test;
 
-import static org.testng.Assert.assertEquals;
 
 import org.testng.annotations.Test;
-import page.HomePage;
+import steps.HomePageSteps;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class CalculatorTest extends CommonConditions {
@@ -23,41 +21,26 @@ public class CalculatorTest extends CommonConditions {
         String expectedSecondCalculationResult = "-1";
         String expectedThirdCalculationResult = "9";
 
-        HomePage homePage = new HomePage(driver)
+        HomePageSteps homePageSteps = new HomePageSteps(driver)
                 .openPage()
-                .waitForPageLoad()
-                .consentManagementPlatformLoading()
-                .consentPersonalDataUsage();
+                .consentManagementPlatformLoadingAndPersonalDataUsage();
 
-        String firstCalculationResult = homePage
+        homePageSteps
                 .inputExpression(firstExpression)
-                .clickEqualSignButton()
-                .waitForExpressionInputValueUpdate()
-                .getCalculationResult();
-        assertEquals(firstCalculationResult, expectedFirstCalculationResult);
+                .executeCalculation()
+                .verifyCalculationResultIs(expectedFirstCalculationResult);
 
-        String secondCalculationResult = homePage
-                .clearExpressionInput()
+        homePageSteps
                 .inputExpression(secondExpression)
                 .clickRadRadioButton()
-                .clickEqualSignButton()
-                .waitForExpressionInputValueUpdate()
-                .getCalculationResult();
-        assertEquals(secondCalculationResult, expectedSecondCalculationResult);
+                .executeCalculation()
+                .verifyCalculationResultIs(expectedSecondCalculationResult);
 
-        String thirdCalculationResult = homePage
-                .clearExpressionInput()
+        homePageSteps
                 .inputExpression(thirdExpression)
-                .clickEqualSignButton()
-                .waitForExpressionInputValueUpdate()
-                .getCalculationResult();
-        assertEquals(thirdCalculationResult, expectedThirdCalculationResult);
+                .executeCalculation()
+                .verifyCalculationResultIs(expectedThirdCalculationResult);
 
-        List<String> calculationHistoryList = homePage
-                .clickHistoryDropdown()
-                .getCalculationHistoryList();
-        Collections.reverse(calculationHistoryList);
-
-        assertEquals(calculationHistoryList, expressionsList);
+        homePageSteps.verifyCalculationHistoryIs(expressionsList);
     }
 }
