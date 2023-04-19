@@ -21,6 +21,8 @@
         <aspectjweaver.version>1.9.19</aspectjweaver.version>
         <allure-testng.version>2.21.0</allure-testng.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <log4j-api.version>2.20.0</log4j-api.version>
+        <log4j-core.version>2.20.0</log4j-core.version>
     </properties>
 
     <build>
@@ -85,6 +87,16 @@
             <version>${allure-testng.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j-core.version}</version>
+        </dependency>
     </dependencies>
-    
+
 </project>

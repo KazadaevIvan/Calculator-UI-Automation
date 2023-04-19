@@ -2,6 +2,8 @@ package utils;
 
 import driver.DriverSingleton;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
@@ -15,28 +17,29 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 public class TestListener implements ITestListener {
+    private Logger log = LogManager.getRootLogger();
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        System.out.printf("================= STARTING TEST %s =================%n", iTestResult.getName());
+        log.info(String.format("================= STARTING TEST %s =================%n", iTestResult.getName()));
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        System.out.printf("================= FINISHED TEST %s Duration: %ss =================%n", iTestResult.getName(),
-                getExecutionTime(iTestResult));
+        log.info(String.format("================= FINISHED TEST %s Duration: %ss =================%n", iTestResult.getName(),
+                getExecutionTime(iTestResult)));
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        System.out.printf("================= FAILED TEST %s Duration: %ss =================%n", iTestResult.getName(),
-                getExecutionTime(iTestResult));
+        log.info(String.format("================= FAILED TEST %s Duration: %ss =================%n", iTestResult.getName(),
+                getExecutionTime(iTestResult)));
         saveScreenshot();
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        System.out.printf("================= SKIPPING TEST %s =================%n", iTestResult.getName());
+        log.info(String.format("================= SKIPPING TEST %s =================%n", iTestResult.getName()));
     }
 
     @Override
@@ -64,7 +67,7 @@ public class TestListener implements ITestListener {
                             + getCurrentTimeAsString() +
                             ".png"));
         } catch (IOException e) {
-            System.out.println("Failed to save screenshot: " + e.getLocalizedMessage());
+            log.error("Failed to save screenshot: " + e.getLocalizedMessage());
         }
     }
 
