@@ -23,13 +23,13 @@ public class CalculatorTest extends CommonConditions {
         String expectedSecondCalculationResult = "-1";
         String expectedThirdCalculationResult = "9";
 
-        HomePage homePage = new HomePage(driver);
-
-        String firstCalculationResult = homePage
+        HomePage homePage = new HomePage(driver)
                 .openPage()
                 .waitForPageLoad()
                 .consentManagementPlatformLoading()
-                .consentPersonalDataUsage()
+                .consentPersonalDataUsage();
+
+        String firstCalculationResult = homePage
                 .inputExpression(firstExpression)
                 .clickEqualSignButton()
                 .waitForExpressionInputValueUpdate()
