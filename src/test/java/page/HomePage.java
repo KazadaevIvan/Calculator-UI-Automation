@@ -1,5 +1,7 @@
 package page;
 
+import static constants.Constant.TimeoutVariable.WAIT_TIMEOUT_SECONDS;
+import static constants.Constant.URLs.BASE_URL;
 import io.qameta.allure.Step;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -9,15 +11,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import waits.CustomConditions;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomePage extends AbstractPage {
-
-    private final String BASE_URL = "https://web2.0calc.com/";
-
     @FindBy(xpath = "//button[@value='consent']")
     private WebElement managementPlatformLoadingModalConsentButton;
 
@@ -43,61 +41,8 @@ public class HomePage extends AbstractPage {
 
     public HomePage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(this.driver, this);
-    }
-
-    @Step("Open Home Page")
-    @Override
-    public HomePage openPage() {
         driver.navigate().to(BASE_URL);
-        return this;
-    }
-
-    @Step("Wait for Home Page load")
-    public HomePage waitForPageLoad() {
-        try {
-            new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(CustomConditions.jQueryAJAXsCompleted());
-        } catch (TimeoutException e) {
-            log.error(e.getLocalizedMessage());
-            Assert.fail("Home page hasn't been loaded.");
-        }
-        return this;
-    }
-
-    @Step("Wait for Management Platform Loading Modal load")
-    public HomePage waitForManagementPlatformLoadingModalLoad() {
-        try {
-            new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                    .until(ExpectedConditions.elementToBeClickable(managementPlatformLoadingModalConsentButton));
-        } catch (TimeoutException e) {
-            log.error(e.getLocalizedMessage());
-            Assert.fail("Management Platform Loading Modal hasn't been loaded.");
-        }
-        return this;
-    }
-
-    @Step("Click Management Platform Loading Modal Consent button")
-    public HomePage clickManagementPlatformLoadingModalConsentButton() {
-        managementPlatformLoadingModalConsentButton.click();
-        return this;
-    }
-
-    @Step("Wait for Personal Data Usage Modal load")
-    public HomePage waitForPersonalDataUsageModalLoad() {
-        try {
-            new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                    .until(ExpectedConditions.elementToBeClickable(personalDataUsageModalConsentButton));
-        } catch (TimeoutException e) {
-            log.error(e.getLocalizedMessage());
-            Assert.fail("MPersonal Data Usage Modal hasn't been loaded.");
-        }
-        return this;
-    }
-
-    @Step("Click Personal Data Usage Modal Consent button")
-    public HomePage clickPersonalDataUsageModalConsentButton() {
-        personalDataUsageModalConsentButton.click();
-        return this;
+        PageFactory.initElements(this.driver, this);
     }
 
     @Step("Input '{expression}' expression")
