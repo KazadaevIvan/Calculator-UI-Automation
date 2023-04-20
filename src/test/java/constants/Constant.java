@@ -2,6 +2,9 @@ package constants;
 
 import org.openqa.selenium.Cookie;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Constant {
     public static class TimeoutVariable {
         public static final int WAIT_TIMEOUT_SECONDS = 10;
@@ -18,6 +21,7 @@ public class Constant {
         public static final String expectedSecondCalculationResult = "-1";
         public static final String thirdExpression = "sqrt(81)";
         public static final String expectedThirdCalculationResult = "9";
+        public static final List<String> expectedCalculationHistory = Arrays.asList(thirdExpression, secondExpression, firstExpression);
     }
 
     public static class Cookies {
