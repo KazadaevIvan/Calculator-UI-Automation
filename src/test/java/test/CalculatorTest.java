@@ -6,8 +6,8 @@ import static constants.Constant.TestData.*;
 
 public class CalculatorTest extends CommonConditions {
 
-    @Test
-    public void shouldBeAbleToSeePerformedCalculationHistory() {
+    @Test(description = "User should be able to see calculation history")
+    public void shouldBeAbleToSeeCalculationHistory() {
         homePage
                 .inputExpression(firstExpression)
                 .executeCalculation()
