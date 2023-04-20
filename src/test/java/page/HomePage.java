@@ -14,7 +14,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,9 +78,7 @@ public class HomePage extends AbstractPage {
         return this;
     }
 
-    @Step("Get calculation result")
     public String getCalculationResult() {
-        log.info("Get calculation result");
         return expressionInput.getAttribute("value");
     }
 
