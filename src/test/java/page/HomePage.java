@@ -82,9 +82,7 @@ public class HomePage extends AbstractPage {
         return expressionInput.getAttribute("value");
     }
 
-    @Step("Get calculation history")
     public List<String> getCalculationHistoryList() {
-        log.info("Get calculation history");
         historyDropdown.click();
         return historyRecordsList.stream()
                 .map(WebElement::getText)
