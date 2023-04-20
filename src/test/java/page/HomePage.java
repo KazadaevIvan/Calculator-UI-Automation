@@ -2,6 +2,8 @@ package page;
 
 import static constants.Constant.TimeoutVariable.WAIT_TIMEOUT_SECONDS;
 import static constants.Constant.URLs.BASE_URL;
+import static org.testng.Assert.assertEquals;
+
 import io.qameta.allure.Step;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,30 +45,30 @@ public class HomePage extends AbstractPage {
     public HomePage(WebDriver driver) {
         super(driver);
         driver.navigate().to(BASE_URL);
+        log.info(String.format("Open '%s' page", BASE_URL));
         PageFactory.initElements(this.driver, this);
     }
 
     @Step("Input '{expression}' expression")
     public HomePage inputExpression(String expression) {
+        log.info(String.format("Input '%s' expression", expression));
         this.expression = expression;
+        expressionInput.clear();
         expressionInput.sendKeys(expression);
         return this;
     }
 
     @Step("Click Rad radio button")
     public HomePage clickRadRadioButton() {
+        log.info("Click Rad radio button");
         radRadioButton.click();
         return this;
     }
 
-    @Step("Click Equal Sign button")
-    public HomePage clickEqualSignButton() {
+    @Step("Execute calculation")
+    public HomePage executeCalculation() {
+        log.info("Execute calculation");
         equalSignButton.click();
-        return this;
-    }
-
-    @Step("Wait for Expression Input value update")
-    public HomePage waitForExpressionInputValueUpdate() {
         try {
             new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                     .until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementValue(expressionInput, expression)));
@@ -78,25 +81,28 @@ public class HomePage extends AbstractPage {
 
     @Step("Get calculation result")
     public String getCalculationResult() {
+        log.info("Get calculation result");
         return expressionInput.getAttribute("value");
     }
 
-    @Step("Clear Expression input")
-    public HomePage clearExpressionInput() {
-        expressionInput.clear();
-        return this;
-    }
-
-    @Step("Click History dropdown")
-    public HomePage clickHistoryDropdown() {
-        historyDropdown.click();
-        return this;
-    }
-
-    @Step("Get Calculation History list")
+    @Step("Get calculation history")
     public List<String> getCalculationHistoryList() {
+        log.info("Get calculation history");
+        historyDropdown.click();
         return historyRecordsList.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
+    }
+
+    @Step("Verify calculation result is: {expectedResult}")
+    public void verifyCalculationResultIs(String expectedResult) {
+        log.info(String.format("Verify calculation result is: %s", expectedResult));
+        assertEquals(this.getCalculationResult(), expectedResult);
+    }
+
+    @Step("Verify calculation history is: {expectedResult}")
+    public void verifyCalculationHistoryIs(List<String> expectedResult) {
+        log.info(String.format("Verify calculation history is: %s", expectedResult));
+        assertEquals(this.getCalculationHistoryList(), expectedResult);
     }
 }
