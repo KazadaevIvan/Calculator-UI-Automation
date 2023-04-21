@@ -42,23 +42,23 @@ public class HomePage extends AbstractPage {
 
     @Step("Input '{expression}' expression")
     public HomePage inputExpression(String expression) {
-        log.info(String.format("Input '%s' expression", expression));
         expressionInput.clear();
         expressionInput.sendKeys(expression);
+        log.info(String.format("Input '%s' expression", expression));
         return this;
     }
 
     @Step("Click Rad radio button")
     public HomePage clickRadRadioButton() {
-        log.info("Click Rad radio button");
         radRadioButton.click();
+        log.info("Click Rad radio button");
         return this;
     }
 
     @Step("Execute calculation")
     public HomePage executeCalculation() {
-        log.info("Execute calculation");
         equalSignButton.click();
+        log.info("Execute calculation");
         this.waitForInputValueUpdate();
         return this;
     }
