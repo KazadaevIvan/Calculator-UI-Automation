@@ -70,7 +70,7 @@ public class HomePage extends AbstractPage {
         equalSignButton.click();
         try {
             new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                    .until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementValue(expressionInput, expression)));
+                    .until(ExpectedConditions.not(ExpectedConditions.attributeContains(expressionInput, "className", "loading")));
         } catch (TimeoutException e) {
             log.error(e.getLocalizedMessage());
             Assert.fail("Expression input value wasn't updated");
