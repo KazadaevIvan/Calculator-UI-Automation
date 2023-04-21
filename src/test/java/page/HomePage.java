@@ -18,12 +18,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomePage extends AbstractPage {
-    @FindBy(xpath = "//button[@value='consent']")
-    private WebElement managementPlatformLoadingModalConsentButton;
-
-    @FindBy(xpath = "//button[@aria-label='Consent']")
-    private WebElement personalDataUsageModalConsentButton;
-
     @FindBy(id = "input")
     private WebElement expressionInput;
 
@@ -39,8 +33,6 @@ public class HomePage extends AbstractPage {
     @FindBy(xpath = "//p[@data-inp]")
     List<WebElement> historyRecordsList;
 
-    private String expression;
-
     public HomePage(WebDriver driver) {
         super(driver);
         driver.navigate().to(BASE_URL);
@@ -51,7 +43,6 @@ public class HomePage extends AbstractPage {
     @Step("Input '{expression}' expression")
     public HomePage inputExpression(String expression) {
         log.info(String.format("Input '%s' expression", expression));
-        this.expression = expression;
         expressionInput.clear();
         expressionInput.sendKeys(expression);
         return this;
