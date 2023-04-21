@@ -59,6 +59,11 @@ public class HomePage extends AbstractPage {
     public HomePage executeCalculation() {
         log.info("Execute calculation");
         equalSignButton.click();
+        this.waitForInputValueUpdate();
+        return this;
+    }
+
+    private HomePage waitForInputValueUpdate() {
         try {
             new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                     .until(ExpectedConditions.not(ExpectedConditions.attributeContains(expressionInput, "className", "loading")));
