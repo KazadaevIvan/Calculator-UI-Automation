@@ -59,7 +59,6 @@ public class HomePage extends AbstractPage {
     public HomePage executeCalculation() {
         equalSignButton.click();
         log.info("Execute calculation");
-        this.waitForInputValueUpdate();
         return this;
     }
 
@@ -75,6 +74,7 @@ public class HomePage extends AbstractPage {
     }
 
     public String getCalculationResult() {
+        this.waitForInputValueUpdate();
         return expressionInput.getAttribute("value");
     }
 
